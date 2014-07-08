@@ -1,0 +1,27 @@
+<!--
+   If you want to debug nodes or run the process in a different window:
+   http://wiki.ros.org/roslaunch/Tutorials/Roslaunch%20Nodes%20in%20Valgrind%20or%20GDB
+-->
+
+<launch>
+  <!-- Nodelet Manager Camera Top -->
+  <node pkg="nodelet" type="nodelet" name="nodelet_manager_top" args="manager"/>
+
+   <!-- UVCCam Nodelet Top -->
+
+   <node pkg="nodelet" type="nodelet" name="camTop" args="load cam_nodelet/UVCCamNode nodelet_manager_top" output="screen">
+     <!--<rosparam file="$(find hyve_camera_common)/param/config_Logitech_C920.yaml"/>-->
+     <rosparam file="$(find hyve_camera_common)/param/config_Microsoft_Lifecam_Cinema.yaml"/>
+   </node>
+
+   <!-- Hiwr tired node -->
+
+   <node pkg="nodelet" type="nodelet" name="hiwr_tired" args="load hiwr_tired/Hiwr_tired_nodelet nodelet_manager_top" output="screen">
+    <param name="video_stream" type="str" value="/camTop/output_video" />
+</node>
+
+    <node pkg="nodelet" type="nodelet" name="debug_display" args="load display_nodelet/Display_node nodelet_manager_top">
+        <param name="video_stream" type="str" value="/camTop/output_video" />
+    </node>
+
+</launch>
