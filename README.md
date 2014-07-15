@@ -40,12 +40,12 @@ Node
 
 ### Subscribed Topics
 
-- `/camera_topic/output_video`
+- `/hiwr_camera_controller/output_video`
       * Subscribe to camera video stream (cf. video_stream parameter)
 
 ### Published Topics
 
-- `/hiwr_tired/tired_value`
+- `/hiwr_tired/brightness`
       * Get the tired value
 
 ### Parameters

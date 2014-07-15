@@ -18,48 +18,45 @@
 ***********************************************************************/
 
 #include "hiwr_tired.h"
-#include <pluginlib/class_list_macros.h>
-
 
 using namespace cv;
 
 namespace hiwr_tired{
-void Hiwr_tired_nodelet::onInit() {
+void HiwrTiredNodelet::onInit() {
     ROS_DEBUG("[Hiwr Tired Nodelet][onInit] Processing tired frame");
 
-    public_nh = getNodeHandle();
-    private_nh = getMTPrivateNodeHandle();
-    it_ = new image_transport::ImageTransport(public_nh);
+    public_nh_ = getNodeHandle();
+    private_nh_ = getMTPrivateNodeHandle();
+    it_ = new image_transport::ImageTransport(public_nh_);
 
-    if(!private_nh.getParam("video_stream", video_stream_name)){
+    if(!private_nh_.getParam("video_stream", video_stream_name_)){
         NODELET_ERROR("[Hiwr Tired Nodelet][onInit] Problem recovering the video stream");
         return;
     }
+    im_available_ = false;
 
-    im_available = false;
+    pub_ = public_nh_.advertise<std_msgs::UInt8>("/hiwr_tired/brightness", 1);
+    image_sub_ = it_->subscribe(video_stream_name_.c_str(), 1,&HiwrTiredNodelet::callback, this);
 
-    pub = public_nh.advertise<std_msgs::UInt8>("/uvc_cam_node/tired", 1);
-    image_sub_ = it_->subscribe(video_stream_name.c_str(), 1,&Hiwr_tired_nodelet::callback, this);
-
-    data_received = false;
-    loop_thread = std::thread(&Hiwr_tired_nodelet::loop , this);
+    data_received_ = false;
+    loop_thread_ = std::thread(&HiwrTiredNodelet::loop , this);
 
 }
 
-void Hiwr_tired_nodelet::loop(){
+void HiwrTiredNodelet::loop(){
     ros::Rate loop_rate(10);
     while(ros::ok()){
 
-        if(data_received){
-            frame = im_ptr->image;
+        if(data_received_){
+            frame_ = im_ptr_->image;
 
             Mat out(Size(1,1) , CV_8UC1) ;
-            cv::resize(frame , out ,  out.size() );
+            cv::resize(frame_ , out ,  out.size() );
 
-            msgUInt8.data = out.data[0];
+            msg_UInt8_.data = out.data[0];
 
-            pub.publish(msgUInt8);
-            data_received = false;
+            pub_.publish(msg_UInt8_);
+            data_received_ = false;
         }
 
         ros::spinOnce();
@@ -67,11 +64,10 @@ void Hiwr_tired_nodelet::loop(){
     }
 }
 
-void Hiwr_tired_nodelet::callback(const sensor_msgs::ImageConstPtr& msg){
-    data_received = true;
-    im_ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::MONO8);
+void HiwrTiredNodelet::callback(const sensor_msgs::ImageConstPtr& msg){
+    data_received_ = true;
+    im_ptr_ = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::MONO8);
 
 }
-PLUGINLIB_DECLARE_CLASS(hiwr_tired, Hiwr_tired_nodelet, hiwr_tired::Hiwr_tired_nodelet, nodelet::Nodelet);
-
+PLUGINLIB_DECLARE_CLASS(hiwr_tired, HiwrTiredNodelet, hiwr_tired::HiwrTiredNodelet, nodelet::Nodelet);
 }

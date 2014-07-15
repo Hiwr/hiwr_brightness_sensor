@@ -1,5 +1,5 @@
 <library path="lib/libhiwr_tired">
-  <class name="hiwr_tired/Hiwr_tired_nodelet" type="hiwr_tired::Hiwr_tired_nodelet" base_class_type="nodelet::Nodelet">
+  <class name="hiwr_tired/HiwrTiredNodelet" type="hiwr_tired::HiwrTiredNodelet" base_class_type="nodelet::Nodelet">
     <description>
       Implementing Hiwr tired node as a nodelet
     </description>

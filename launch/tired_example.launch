@@ -1,0 +1,23 @@
+<launch>
+<!-- Nodelet Manager Camera Top -->
+<node pkg="nodelet" type="nodelet" name="nodelet_manager_top" args="manager"/>
+
+   <!-- UVCCam Nodelet Top -->
+   <node pkg="nodelet" type="nodelet" name="camTop" args="load hiwr_camera_controller/HiwrCameraControllerNodelet nodelet_manager_top" output="screen">
+
+     <!--<rosparam file="$(find hyve_camera_common)/param/config_Logitech_C920.yaml"/>-->
+     <rosparam file="$(find hiwr_camera_controller)/param/config_Microsoft_Lifecam_Cinema.yaml"/>
+
+   </node>
+
+   <!-- Hiwr tired node -->
+
+   <node pkg="nodelet" type="nodelet" name="hiwr_tired" args="load hiwr_tired/HiwrTiredNodelet nodelet_manager_top" output="screen">
+   <param name="video_stream" type="str" value="/camTop/output_video" />
+   </node>
+
+<!--    <node pkg="nodelet" type="nodelet" name="debug_display" args="load display_nodelet/Display_node nodelet_manager_top">
+    <param name="video_stream" type="str" value="/camTop/output_video" />
+    </node>
+-->
+</launch>
