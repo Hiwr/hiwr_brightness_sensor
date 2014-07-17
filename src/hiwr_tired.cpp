@@ -35,7 +35,10 @@ void HiwrTiredNodelet::onInit() {
     }
     im_available_ = false;
 
+    // Publisher
     pub_ = public_nh_.advertise<std_msgs::UInt8>("/hiwr_tired/brightness", 1);
+
+    // Subscriber
     image_sub_ = it_->subscribe(video_stream_name_.c_str(), 1,&HiwrTiredNodelet::callback, this);
 
     data_received_ = false;
@@ -47,6 +50,7 @@ void HiwrTiredNodelet::loop(){
     ros::Rate loop_rate(10);
     while(ros::ok()){
 
+        // When receiving data, publishing them on /hiwr_tired/brightness
         if(data_received_){
             frame_ = im_ptr_->image;
 
