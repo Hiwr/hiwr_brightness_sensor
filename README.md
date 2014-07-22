@@ -1,7 +1,7 @@
 hiwr\_brightness\_sensor
 ===============================================
 
-The hiwr\_tracker ROS package aims to compute the current brightness with the video camera.
+The hiwr\_brightness\_sensor ROS package aims to compute the current brightness with the video camera.
 
 Contributing
 ----------------------
