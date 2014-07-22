@@ -17,12 +17,12 @@
 * 
 ***********************************************************************/
 
-#include "hiwr_tired.h"
+#include "hiwr_brightness_sensor.h"
 
 using namespace cv;
 
-namespace hiwr_tired{
-void HiwrTiredNodelet::onInit() {
+namespace hiwr_brightness_sensor{
+void HiwrBrightnessSensor::onInit() {
     ROS_DEBUG("[Hiwr Tired Nodelet][onInit] Processing tired frame");
 
     public_nh_ = getNodeHandle();
@@ -36,17 +36,17 @@ void HiwrTiredNodelet::onInit() {
     im_available_ = false;
 
     // Publisher
-    pub_ = public_nh_.advertise<std_msgs::UInt8>("/hiwr_tired/brightness", 1);
+    pub_ = public_nh_.advertise<std_msgs::UInt8>("/hiwr_brightness_sensor/brightness", 1);
 
     // Subscriber
-    image_sub_ = it_->subscribe(video_stream_name_.c_str(), 1,&HiwrTiredNodelet::callback, this);
+    image_sub_ = it_->subscribe(video_stream_name_.c_str(), 1,&HiwrBrightnessSensor::callback, this);
 
     data_received_ = false;
-    loop_thread_ = std::thread(&HiwrTiredNodelet::loop , this);
+    loop_thread_ = std::thread(&HiwrBrightnessSensor::loop , this);
 
 }
 
-void HiwrTiredNodelet::loop(){
+void HiwrBrightnessSensor::loop(){
     ros::Rate loop_rate(10);
     while(ros::ok()){
 
@@ -68,10 +68,10 @@ void HiwrTiredNodelet::loop(){
     }
 }
 
-void HiwrTiredNodelet::callback(const sensor_msgs::ImageConstPtr& msg){
+void HiwrBrightnessSensor::callback(const sensor_msgs::ImageConstPtr& msg){
     data_received_ = true;
     im_ptr_ = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::MONO8);
 
 }
-PLUGINLIB_DECLARE_CLASS(hiwr_tired, HiwrTiredNodelet, hiwr_tired::HiwrTiredNodelet, nodelet::Nodelet);
+PLUGINLIB_DECLARE_CLASS(hiwr_brightness_sensor, HiwrBrightnessSensor, hiwr_brightness_sensor::HiwrBrightnessSensor, nodelet::Nodelet);
 }

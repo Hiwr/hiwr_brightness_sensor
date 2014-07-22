@@ -1,0 +1,7 @@
+<library path="lib/libhiwr_brightness_sensor">
+  <class name="hiwr_brightness_sensor/HiwrBrightnessSensor" type="hiwr_brightness_sensor::HiwrBrightnessSensor" base_class_type="nodelet::Nodelet">
+    <description>
+      Implementing Hiwr Brightness Sensor node as a nodelet
+    </description>
+  </class>
+</library>

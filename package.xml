@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
-<package> <name>hiwr_tired</name> <version>0.0.0</version> <description>The hiwr tired package</description>
+<package> <name>hiwr_brightness_sensor</name> <version>1.0.1</version>
+ <description>The hiwr brightness package</description>
 
  <maintainer email="lucile.peuch@worldline.com">lpeuch</maintainer>
 
@@ -24,6 +25,6 @@
 <export>
 <!-- You can specify that this package is a metapackage here: -->
 <!-- <metapackage/> -->
-    <nodelet plugin="${prefix}/hiwr-tired-nodelet.xml"/>
+    <nodelet plugin="${prefix}/hiwr-brightness-sensor-nodelet.xml"/>
 <!-- Other tools can request additional information be placed here -->
  </export> </package>

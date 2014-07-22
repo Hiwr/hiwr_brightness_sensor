@@ -49,9 +49,9 @@
 
 #include <pluginlib/class_list_macros.h>
 
-namespace hiwr_tired{
+namespace hiwr_brightness_sensor{
 
-  class HiwrTiredNodelet : public nodelet::Nodelet{
+  class HiwrBrightnessSensor : public nodelet::Nodelet{
   public:
     virtual void onInit();
 
@@ -89,5 +89,5 @@ namespace hiwr_tired{
 
   };
 
-  PLUGINLIB_DECLARE_CLASS(hiwr_tired, HiwrTiredNodelet, hiwr_tired::HiwrTiredNodelet, nodelet::Nodelet);
+  PLUGINLIB_DECLARE_CLASS(hiwr_brightness_sensor, HiwrBrightnessSensor, hiwr_brightness_sensor::HiwrBrightnessSensor, nodelet::Nodelet);
 }

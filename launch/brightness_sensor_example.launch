@@ -12,7 +12,7 @@
 
    <!-- Hiwr tired node -->
 
-   <node pkg="nodelet" type="nodelet" name="hiwr_tired" args="load hiwr_tired/HiwrTiredNodelet nodelet_manager_top" output="screen">
+   <node pkg="nodelet" type="nodelet" name="hiwr_brightness_sensor" args="load hiwr_brightness_sensor/HiwrBrightnessSensor nodelet_manager_top" output="screen">
    <param name="video_stream" type="str" value="/camTop/output_video" />
    </node>
 
